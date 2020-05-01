@@ -6,7 +6,9 @@ const BuildControl = (props) => {
     <div className={ss.BuildControl}>
       <div className={ss.Label}>{props.label}</div>
       <button className={ss.Less}>Less</button>
-      <button className={ss.More}>More</button>
+      <button onClick={props.added} className={ss.More}>
+        More
+      </button>
     </div>
   );
 };

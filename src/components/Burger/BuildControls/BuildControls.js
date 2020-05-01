@@ -9,11 +9,15 @@ const controls = [
   { label: 'Meat', type: 'meat' },
 ];
 
-const BuildControls = () => {
+const BuildControls = (props) => {
   return (
     <div className={ss.BuildControls}>
       {controls.map((e) => (
-        <BuildControl key={e.label} label={e.label} />
+        <BuildControl
+          key={e.label}
+          label={e.label}
+          added={() => props.ingredientAdded(e.type)}
+        />
       ))}
     </div>
   );

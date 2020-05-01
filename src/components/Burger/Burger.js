@@ -12,7 +12,6 @@ const Burger = (props) => {
       ingArray.push(<BurgetIngridient type={e} key={e + i + index} />);
     }
   });
-  console.log(ingArray);
 
   return (
     <div className={ss.Burger}>
