@@ -8,15 +8,16 @@ const Burger = (props) => {
   let ingArray = [];
   objKeys.map((e, index) => {
     for (let i = 0; i < props.ingredients[e]; i++) {
-      //проходим по каждому с ключей берем
+      //проходим по каждому с ключей, добавляем в список по значению  ключа. Например "salad": 2 - добавляем 2 салата.
       ingArray.push(<BurgetIngridient type={e} key={e + i + index} />);
     }
   });
+  console.log(ingArray);
 
   return (
     <div className={ss.Burger}>
       <BurgetIngridient type='bread-top' />
-      {ingArray}
+      {ingArray.length !== 0 ? ingArray : <p>Put some ingridients</p>}
       <BurgetIngridient type='bread-bottom' />
     </div>
   );
