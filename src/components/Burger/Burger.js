@@ -6,6 +6,12 @@ const Burger = (props) => {
   let objKeys = Object.keys(props.ingredients); // возвращаем список ключей с обьекта
 
   let ingArray = [];
+  // ingArray = objKeys.map((igKey) => {
+  //   return [...Array(props.ingredients[igKey])].map((_, i) => {
+  //     return <BurgetIngridient key={igKey + i} type={igKey} />;
+  //   });
+  // });
+
   objKeys.map((e, index) => {
     for (let i = 0; i < props.ingredients[e]; i++) {
       //проходим по каждому с ключей, добавляем в список по значению  ключа. Например "salad": 2 - добавляем 2 салата.

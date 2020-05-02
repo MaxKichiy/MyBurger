@@ -5,7 +5,13 @@ const BuildControl = (props) => {
   return (
     <div className={ss.BuildControl}>
       <div className={ss.Label}>{props.label}</div>
-      <button className={ss.Less}>Less</button>
+      <button
+        onClick={props.minus}
+        className={ss.Less}
+        disabled={props.disabled}
+      >
+        Less
+      </button>
       <button onClick={props.added} className={ss.More}>
         More
       </button>
