@@ -17,9 +17,10 @@ class BurgerBuilder extends React.Component {
       cheese: 0,
       meat: 0,
     },
-    totalIng: [],
     totalPrice: 3,
+    // purchasable: false,
   };
+
   addIngredientHandler = (type) => {
     const oldCount = this.state.ingredients[type];
     const updatedCount = oldCount + 1;
@@ -56,11 +57,20 @@ class BurgerBuilder extends React.Component {
     const disabledInfo = {
       ...this.state.ingredients,
     };
-
     for (let n in disabledInfo) {
       disabledInfo[n] = disabledInfo[n] <= 0;
     }
-    console.log(disabledInfo);
+
+    function didItTrue(obj) {
+      for (let n in Object.keys(obj)) {
+        if (obj[Object.keys(obj)[n]] !== true) {
+          // если добавили какой-то ингредиент кнопка покупки станет доступна
+          return false;
+        }
+      }
+      return true;
+    }
+
     return (
       <React.Fragment>
         <Burger
@@ -72,6 +82,7 @@ class BurgerBuilder extends React.Component {
           ingredientMinus={this.removeIngredientHandler}
           disabled={disabledInfo}
           price={this.state.totalPrice}
+          allDisabled={didItTrue(disabledInfo)}
         />
       </React.Fragment>
     );

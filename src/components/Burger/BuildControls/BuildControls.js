@@ -24,6 +24,9 @@ const BuildControls = (props) => {
           disabled={props.disabled[e.type]}
         />
       ))}
+      <button disabled={props.allDisabled} className={ss.OrderButton}>
+        ORDER NOW
+      </button>
     </div>
   );
 };
