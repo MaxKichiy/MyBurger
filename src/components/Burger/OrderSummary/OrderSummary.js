@@ -2,6 +2,8 @@ import React from 'react';
 import Button from '../../UI/Button/Button';
 
 const OrderSummary = (props) => {
+  console.log('hola ordersummary rendered');
+
   const ingredientSummary = Object.keys(props.ingredients).map((igKey) => (
     <li key={igKey}>
       <span style={{ textTransform: 'capitalize' }}>{igKey}</span> :

@@ -2,7 +2,8 @@ import React from 'react';
 import ss from './Modal.module.css';
 import Backdrop from '../Backdrop/Backdrop';
 
-const Modal = (props) => {
+const Modal = React.memo((props) => {
+  console.log('Privet ot modal');
   return (
     <React.Fragment>
       <Backdrop show={props.show} hide={props.hide} />
@@ -17,6 +18,6 @@ const Modal = (props) => {
       </div>
     </React.Fragment>
   );
-};
+});
 
 export default Modal;
