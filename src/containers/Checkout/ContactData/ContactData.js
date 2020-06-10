@@ -5,11 +5,65 @@ import ss from '../ContactData/ContactData.module.css';
 import axios from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import { withRouter } from 'react-router-dom';
+import Input from '../../../components/UI/Input/Input';
 
 const ContactData = (props) => {
+  const [orderForm, setOrderForm] = useState({
+    name: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'text',
+        placeholder: 'Your Name',
+      },
+      value: '',
+    },
+    street: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'text',
+        placeholder: 'Street',
+      },
+      value: '',
+    },
+    zipCode: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'text',
+        placeholder: 'ZIP Code',
+      },
+      value: '',
+    },
+    country: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'text',
+        placeholder: 'Country',
+      },
+      value: '',
+    },
+    email: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'email',
+        placeholder: 'Your E-Mail',
+      },
+      value: '',
+    },
+    deliveryMethod: {
+      elementType: 'select',
+      elementConfig: {
+        options: [
+          { value: 'fastest', displayValue: 'Fastest' },
+          { value: 'cheapest', displayValue: 'Cheapest' },
+        ],
+        placeholder: '',
+      },
+      value: '',
+    },
+  });
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState({
     street: '',
     postalCode: '',
@@ -21,16 +75,6 @@ const ContactData = (props) => {
     const order = {
       ingredients: props.ingredients,
       price: props.price,
-      customer: {
-        name: 'Max',
-        address: {
-          street: 'Test 1',
-          zipCode: '33024',
-          country: 'Ukraine',
-        },
-        email: 'ggg@gmail.com',
-      },
-      deliveryMethod: 'fastest',
     };
     axios
       .post('/orders.json', order)
@@ -40,32 +84,26 @@ const ContactData = (props) => {
       })
       .catch((error) => setLoading(false));
   };
+
+  const formElementsArray = [];
+  for (let key in orderForm) {
+    formElementsArray.push({
+      id: key,
+      config: orderForm[key],
+    });
+  }
+
   let form = (
     <form>
-      <input
-        className={ss.Input}
-        type='text'
-        name='name'
-        placeholder='Your Name'
-      />
-      <input
-        className={ss.Input}
-        type='email'
-        name='email'
-        placeholder='Your Mail'
-      />
-      <input
-        className={ss.Input}
-        type='text'
-        name='street'
-        placeholder=' Street'
-      />
-      <input
-        className={ss.Input}
-        type='text'
-        name='street'
-        placeholder=' Postal Code'
-      />
+      {formElementsArray.map((formElement) => (
+        <Input
+          key={formElement.id}
+          elementType={formElement.config.elementType}
+          elementConfig={formElement.config.elementConfig}
+          value={formElement.config.elementConfig.value}
+        />
+      ))}
+
       <Button btnType='Success' clicked={orderHandler}>
         ORDER
       </Button>
