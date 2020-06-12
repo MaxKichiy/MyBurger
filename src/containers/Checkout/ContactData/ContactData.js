@@ -83,8 +83,9 @@ const ContactData = (props) => {
         ],
         placeholder: '',
       },
-      value: '',
+      value: 'fastest',
       valid: true,
+      validation: {},
     },
   });
   const [IsValidate, setValidation] = useState(false);
