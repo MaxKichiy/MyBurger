@@ -1,15 +1,21 @@
 import React from 'react';
 
 import ss from './Input.module.css';
+import classes from './Input.module.css';
 
 const Input = (props) => {
   let inputElement = null;
+  const inputClasses = [ss.InputElement];
+
+  if (props.invalid && props.shouldValidate && props.touched) {
+    inputClasses.push(ss.Invalid);
+  }
 
   switch (props.elementType) {
     case 'input':
       inputElement = (
         <input
-          className={ss.InputElement}
+          className={inputClasses.join(' ')}
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}
@@ -28,7 +34,7 @@ const Input = (props) => {
     case 'select':
       inputElement = (
         <select
-          className={ss.InputElement}
+          className={inputClasses.join(' ')}
           value={props.value}
           onChange={props.changed}
         >
@@ -43,7 +49,7 @@ const Input = (props) => {
     default:
       inputElement = (
         <input
-          className={ss.InputElement}
+          className={inputClasses.join(' ')}
           {...props.elementConfig}
           value={props.value}
         />
