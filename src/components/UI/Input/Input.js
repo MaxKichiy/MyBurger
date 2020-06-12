@@ -12,15 +12,26 @@ const Input = (props) => {
           className={ss.InputElement}
           {...props.elementConfig}
           value={props.value}
+          onChange={props.changed}
         />
       );
       break;
     case 'textarea':
-      inputElement = <textarea {...props.elementConfig} value={props.value} />;
+      inputElement = (
+        <textarea
+          {...props.elementConfig}
+          value={props.value}
+          onChange={props.changed}
+        />
+      );
       break;
     case 'select':
       inputElement = (
-        <select className={ss.InputElement} value={props.value}>
+        <select
+          className={ss.InputElement}
+          value={props.value}
+          onChange={props.changed}
+        >
           {props.elementConfig.options.map((option, id) => (
             <option key={id} value={option.value}>
               {option.displayValue}
