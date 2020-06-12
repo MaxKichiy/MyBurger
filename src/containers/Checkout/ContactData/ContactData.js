@@ -84,8 +84,10 @@ const ContactData = (props) => {
         placeholder: '',
       },
       value: '',
+      valid: true,
     },
   });
+  const [IsValidate, setValidation] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -124,9 +126,9 @@ const ContactData = (props) => {
   }
 
   const checkValidity = (value, rules) => {
-    let isValid = false;
+    let isValid = true;
 
-    if (rules.required) {
+    if (rules.required && isValid) {
       isValid = value.trim() !== '';
     }
 
@@ -146,8 +148,12 @@ const ContactData = (props) => {
     );
     updatedOrderForm[inputId] = updatedFormElement;
     updatedFormElement.touched = true;
-
+    let formIsValid = true;
+    for (let inputId in updatedOrderForm) {
+      formIsValid = updatedOrderForm[inputId].valid && formIsValid;
+    }
     setOrderForm(updatedOrderForm);
+    setValidation(formIsValid);
   };
 
   let form = (
@@ -165,7 +171,7 @@ const ContactData = (props) => {
         />
       ))}
 
-      <Button btnType='Success' clicked={orderHandler}>
+      <Button btnType='Success' clicked={orderHandler} disabled={!IsValidate}>
         ORDER
       </Button>
     </form>
