@@ -6,6 +6,7 @@ import axios from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import { withRouter } from 'react-router-dom';
 import Input from '../../../components/UI/Input/Input';
+import { connect } from 'react-redux';
 
 const ContactData = (props) => {
   const [orderForm, setOrderForm] = useState({
@@ -105,7 +106,7 @@ const ContactData = (props) => {
       formData[formElementId] = orderForm[formElementId].value;
     }
     const order = {
-      ingredients: props.ingredients,
+      ingredients: props.ings,
       price: props.price,
       orderData: formData,
     };
@@ -188,4 +189,11 @@ const ContactData = (props) => {
     </div>
   );
 };
-export default withRouter(ContactData);
+
+const mapStateToProps = (state) => {
+  return {
+    ings: state.ingredients,
+    price: state.totalPrice,
+  };
+};
+export default connect(mapStateToProps)(withRouter(ContactData));
