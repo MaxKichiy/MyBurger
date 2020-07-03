@@ -7,6 +7,8 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import { withRouter } from 'react-router-dom';
 import Input from '../../../components/UI/Input/Input';
 import { connect } from 'react-redux';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import * as actions from '../../../store/actions/index';
 
 const ContactData = (props) => {
   const [orderForm, setOrderForm] = useState({
@@ -92,7 +94,6 @@ const ContactData = (props) => {
   const [IsValidate, setValidation] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState({
     street: '',
     postalCode: '',
@@ -100,7 +101,6 @@ const ContactData = (props) => {
 
   const orderHandler = (event) => {
     event.preventDefault();
-    setLoading(true);
     const formData = {};
     for (let formElementId in orderForm) {
       formData[formElementId] = orderForm[formElementId].value;
@@ -110,6 +110,8 @@ const ContactData = (props) => {
       price: props.price,
       orderData: formData,
     };
+
+    props.onOrderBurger(order);
   };
 
   const formElementsArray = [];
@@ -171,7 +173,7 @@ const ContactData = (props) => {
       </Button>
     </form>
   );
-  if (loading) {
+  if (props.loading) {
     form = <Spinner />;
   }
 
@@ -185,8 +187,18 @@ const ContactData = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    ings: state.ingredients,
-    price: state.totalPrice,
+    ings: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.totalPrice,
+    loading: state.order.loading,
   };
 };
-export default connect(mapStateToProps)(withRouter(ContactData));
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData)),
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(ContactData, axios));

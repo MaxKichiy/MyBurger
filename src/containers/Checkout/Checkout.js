@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import { useEffect } from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Redirect } from 'react-router-dom';
 import ContactData from './ContactData/ContactData';
 import { connect } from 'react-redux';
+
 const Checkout = (props) => {
   // const [ingredients, setIngredients] = useState({
   //   salad: 0,
@@ -37,25 +38,30 @@ const Checkout = (props) => {
     props.history.replace('/checkout/contact-data');
   };
 
-  return (
-    <div>
-      <CheckoutSummary
-        ingredients={props.ings}
-        checkoutCancelled={checkoutCancelledHandler}
-        checkoutContinued={checkoutContinuedHandler}
-      />
-      <Route
-        path={props.match.path + '/contact-data'}
-        component={ContactData}
-      />
-    </div>
-  );
+  let summary = <Redirect to='/' />;
+  if (props.ings) {
+    summary = (
+      <div>
+        <CheckoutSummary
+          ingredients={props.ings}
+          checkoutCancelled={checkoutCancelledHandler}
+          checkoutContinued={checkoutContinuedHandler}
+        />
+        <Route
+          path={props.match.path + '/contact-data'}
+          component={ContactData}
+        />
+      </div>
+    );
+  }
+
+  return summary;
 };
 
 const mapStateToProps = (state) => {
   return {
-    ings: state.ingredients,
-    price: state.totalPrice,
+    ings: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.totalPrice,
   };
 };
 
