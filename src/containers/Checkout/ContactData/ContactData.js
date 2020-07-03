@@ -110,13 +110,6 @@ const ContactData = (props) => {
       price: props.price,
       orderData: formData,
     };
-    axios
-      .post('/orders.json', order)
-      .then((response) => {
-        setLoading(false);
-        props.history.push('/');
-      })
-      .catch((error) => setLoading(false));
   };
 
   const formElementsArray = [];
