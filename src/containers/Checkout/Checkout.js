@@ -17,7 +17,6 @@ const Checkout = (props) => {
   // const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    props.onInitPurchase();
     //   const query = new URLSearchParams(props.location.search);
     //   const getingredients = {};
     //   let price = 0;
@@ -69,10 +68,5 @@ const mapStateToProps = (state) => {
     purchased: state.order.purchased,
   };
 };
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onInitPurchase: () => dispatch(actions.purchaseInit),
-  };
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Checkout);
+export default connect(mapStateToProps)(Checkout);
