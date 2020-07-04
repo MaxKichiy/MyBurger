@@ -70,7 +70,7 @@ class BurgerBuilder extends React.Component {
     // }
     // queryParams.push('price=' + this.props.price);
     // const queryString = queryParams.join('&');
-
+    this.props.onInitPurhase();
     this.props.history.push('/checkout');
   };
 
@@ -146,6 +146,7 @@ const mapDispatchToProps = (dispatch) => {
     onIngredientRemoved: (ingName) =>
       dispatch(burgerBuilderActions.removeIngredient(ingName)),
     onInitIngredietns: () => dispatch(burgerBuilderActions.initIngredients()),
+    onInitPurhase: () => dispatch(burgerBuilderActions.purchaseInit()),
   };
 };
 
