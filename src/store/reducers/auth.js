@@ -9,6 +9,12 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.AUTH_LOGOUT:
+      return {
+        ...state,
+        token: null,
+        userId: null,
+      };
     case actionTypes.AUTH_FAIL:
       return {
         ...state,
