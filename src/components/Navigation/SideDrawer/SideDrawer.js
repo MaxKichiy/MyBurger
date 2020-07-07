@@ -12,7 +12,7 @@ const SideDrawer = (props) => {
       <div className={ss.SideDrawer + ' ' + (props.open ? ss.Open : ss.Close)}>
         <Logo height={'14%'} marginBottom={'32px'} />
         <nav>
-          <NavigationItems />
+          <NavigationItems isAuth={props.isAuth} />
         </nav>
       </div>
     </React.Fragment>

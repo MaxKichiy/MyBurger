@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import ss from './Layout.module.css';
 import Toolbar from '../Navigation/Toolbar/Toolbar';
 import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
+import { connect } from 'react-redux';
 
-export const Layout = (props) => {
+const Layout = (props) => {
   let initialState = {
     showSideDrawer: false,
   };
@@ -18,8 +19,9 @@ export const Layout = (props) => {
 
   return (
     <React.Fragment>
-      <Toolbar open={sideDrawerCLoseHandler} />
+      <Toolbar isAuth={props.isAuth} open={sideDrawerCLoseHandler} />
       <SideDrawer
+        isAuth={props.isAuth}
         open={myState.showSideDrawer}
         closed={sideDrawerCLoseHandler}
       />
@@ -27,3 +29,11 @@ export const Layout = (props) => {
     </React.Fragment>
   );
 };
+
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.auth.token !== null,
+  };
+};
+
+export default connect(mapStateToProps)(Layout);
