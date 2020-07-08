@@ -56,6 +56,7 @@ class BurgerBuilder extends React.Component {
         purchasing: true,
       });
     } else {
+      this.props.onSetRedirect('/checkout');
       this.props.history.push('/auth');
     }
   };
@@ -153,6 +154,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(burgerBuilderActions.removeIngredient(ingName)),
     onInitIngredietns: () => dispatch(burgerBuilderActions.initIngredients()),
     onInitPurhase: () => dispatch(burgerBuilderActions.purchaseInit()),
+    onSetRedirect: (path) =>
+      dispatch(burgerBuilderActions.setAuthRedirectPath(path)),
   };
 };
 

@@ -11,4 +11,11 @@ export {
   fetchOrders,
 } from './order';
 
-export { auth, authFail, authStart, authSuccess, logout } from './auth';
+export {
+  auth,
+  authFail,
+  authStart,
+  authSuccess,
+  logout,
+  setAuthRedirectPath,
+} from './auth';
