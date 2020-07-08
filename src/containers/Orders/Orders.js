@@ -12,7 +12,7 @@ const Orders = (props) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    props.onFetchOrders(props.token);
+    props.onFetchOrders(props.token, props.userId);
     // axios
     //   .get('/orders.json')
     //   .then((res) => {
@@ -46,12 +46,14 @@ const mapStateToProps = (state) => {
     orders: state.order.orders,
     loading: state.order.loading,
     token: state.auth.token,
+    userId: state.auth.userId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onFetchOrders: (token) => dispatch(actions.fetchOrders(token)),
+    onFetchOrders: (token, userId) =>
+      dispatch(actions.fetchOrders(token, userId)),
   };
 };
 export default connect(
