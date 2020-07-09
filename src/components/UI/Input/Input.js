@@ -1,7 +1,6 @@
 import React from 'react';
 
 import ss from './Input.module.css';
-import classes from './Input.module.css';
 
 const Input = (props) => {
   let inputElement = null;

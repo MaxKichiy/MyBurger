@@ -4,7 +4,6 @@ import Button from '../../../components/UI/Button/Button';
 import ss from '../ContactData/ContactData.module.css';
 import axios from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import { withRouter } from 'react-router-dom';
 import Input from '../../../components/UI/Input/Input';
 import { connect } from 'react-redux';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -93,12 +92,6 @@ const ContactData = (props) => {
     },
   });
   const [IsValidate, setValidation] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [address, setAddress] = useState({
-    street: '',
-    postalCode: '',
-  });
 
   const orderHandler = (event) => {
     event.preventDefault();

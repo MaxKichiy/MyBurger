@@ -96,7 +96,7 @@ class BurgerBuilder extends React.Component {
       }
       return true;
     }
-    let spinner = this.props.error ? <p>Something is wrong</p> : <Spinner />;
+    // let spinner = this.props.error ? <p>Something is wrong</p> : <Spinner />;
 
     return (
       <React.Fragment>

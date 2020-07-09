@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Order from '../../components/Order/Order';
-import { useState } from 'react';
 import axios from '../../axios-orders';
 import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
@@ -8,9 +7,6 @@ import { connect } from 'react-redux';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 const Orders = (props) => {
-  const [retOrders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     props.onFetchOrders(props.token, props.userId);
     // axios
