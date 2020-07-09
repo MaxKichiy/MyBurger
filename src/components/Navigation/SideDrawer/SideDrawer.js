@@ -9,7 +9,10 @@ const SideDrawer = (props) => {
   return (
     <React.Fragment>
       <Backdrop show={props.open} hide={props.closed} />
-      <div className={ss.SideDrawer + ' ' + (props.open ? ss.Open : ss.Close)}>
+      <div
+        className={ss.SideDrawer + ' ' + (props.open ? ss.Open : ss.Close)}
+        onClick={props.closed}
+      >
         <Logo height={'14%'} marginBottom={'32px'} />
         <nav>
           <NavigationItems isAuth={props.isAuth} />
