@@ -8,13 +8,24 @@ import NavigationItem from './NavigationItem/NavigationItem';
 configure({ adapter: new Adapter() });
 
 describe('<NavigationItems />', () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = shallow(<NavigationItems />);
+  });
+
   it('should render two <NavigationItems /> elements if not authenticated', () => {
-    const wrapper = shallow(<NavigationItems />);
     expect(wrapper.find(NavigationItem)).toHaveLength(2);
   });
 
   it('should render three <NavigationItems /> elements if  authenticated', () => {
-    const wrapper = shallow(<NavigationItems isAuth />);
+    wrapper.setProps({ isAuth: true });
     expect(wrapper.find(NavigationItem)).toHaveLength(3);
+  });
+
+  it('should render one <NavigationItem /> elements if  auth', () => {
+    wrapper.setProps({ isAuth: true });
+    expect(
+      wrapper.contains(<NavigationItem link='/logout'>Logout</NavigationItem>)
+    ).toEqual(true);
   });
 });
