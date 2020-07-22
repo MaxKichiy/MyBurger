@@ -7,28 +7,7 @@ import ContactData from './ContactData/ContactData';
 import { connect } from 'react-redux';
 
 const Checkout = (props) => {
-  // const [ingredients, setIngredients] = useState({
-  //   salad: 0,
-  //   cheese: 0,
-  //   meat: 0,
-  //   bacon: 0,
-  // });
-  // const [totalPrice, setTotalPrice] = useState(0);
-
-  useEffect(() => {
-    //   const query = new URLSearchParams(props.location.search);
-    //   const getingredients = {};
-    //   let price = 0;
-    //   for (let param of query.entries()) {
-    //     if (param[0] === 'price') {
-    //       price = param[1];
-    //     } else {
-    //       getingredients[param[0]] = +param[1];
-    //     }
-    //   }
-    //   setIngredients(getingredients);
-    //   setTotalPrice(price);
-  }, []);
+  useEffect(() => {}, []);
 
   const checkoutCancelledHandler = () => {
     props.history.goBack();

@@ -2,7 +2,7 @@ import React from 'react';
 import ss from './Modal.module.css';
 import Backdrop from '../Backdrop/Backdrop';
 
-const Modal = React.memo((props) => {
+const Modal = (props) => {
   return (
     <React.Fragment>
       <Backdrop show={props.show} hide={props.hide} />
@@ -17,6 +17,11 @@ const Modal = React.memo((props) => {
       </div>
     </React.Fragment>
   );
-});
+};
 
-export default Modal;
+export default React.memo(
+  Modal,
+  (prevProps, nextProps) =>
+    nextProps.show === prevProps.show &&
+    nextProps.children === prevProps.children
+);

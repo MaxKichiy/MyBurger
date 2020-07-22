@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
@@ -8,103 +8,93 @@ import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler';
 import { connect } from 'react-redux';
 import * as burgerBuilderActions from '../../store/actions/index';
 import axios from '../../axios-orders';
+import { useEffect } from 'react';
 
-export class BurgerBuilder extends React.Component {
-  state = {
-    purchasing: false,
-  };
+const BurgerBuilder = (props) => {
+  const [purchasing, setPurchasing] = useState(false);
 
-  componentDidMount() {
-    this.props.onInitIngredietns();
-  }
+  useEffect(() => {
+    props.onInitIngredietns();
+  }, []);
 
-  purchaseHandler = () => {
-    if (this.props.isAuth) {
-      this.setState({
-        purchasing: true,
-      });
+  const purchaseHandler = () => {
+    if (props.isAuth) {
+      setPurchasing(true);
     } else {
-      this.props.onSetRedirect('/checkout');
-      this.props.history.push('/auth');
+      props.onSetRedirect('/checkout');
+      props.history.push('/auth');
     }
   };
-  stopPurchaseHandler = () => {
-    this.setState({
-      purchasing: false,
-    });
+  const stopPurchaseHandler = () => {
+    setPurchasing(false);
   };
 
-  purchaseContinueHandler = () => {
+  const purchaseContinueHandler = () => {
     // const queryParams = [];
-    // for (let i in this.props.ings) {
+    // for (let i in props.ings) {
     //   queryParams.push(
-    //     encodeURIComponent(i) + '=' + encodeURIComponent(this.props.ings[i])
+    //     encodeURIComponent(i) + '=' + encodeURIComponent(props.ings[i])
     //   );
     // }
-    // queryParams.push('price=' + this.props.price);
+    // queryParams.push('price=' + props.price);
     // const queryString = queryParams.join('&');
-    this.props.onInitPurhase();
-    this.props.history.push('/checkout');
+    props.onInitPurhase();
+    props.history.push('/checkout');
   };
 
-  render() {
-    const disabledInfo = {
-      ...this.props.ings,
-    };
-    for (let n in disabledInfo) {
-      disabledInfo[n] = disabledInfo[n] <= 0;
-    }
-
-    function didItTrue(obj) {
-      for (let n in Object.keys(obj)) {
-        if (obj[Object.keys(obj)[n]] !== true) {
-          // если добавили какой-то ингредиент кнопка покупки станет доступна
-          return false;
-        }
-      }
-      return true;
-    }
-    // let spinner = this.props.error ? <p>Something is wrong</p> : <Spinner />;
-
-    return (
-      <React.Fragment>
-        <Modal show={this.state.purchasing} hide={this.stopPurchaseHandler}>
-          {!this.props.ings && this.state.loading ? (
-            <Spinner />
-          ) : (
-            <OrderSummary
-              purchContinue={this.purchaseContinueHandler}
-              purchCancel={this.stopPurchaseHandler}
-              ingredients={this.props.ings}
-              price={this.props.price}
-            />
-          )}
-        </Modal>
-        {this.props.ings ? (
-          <React.Fragment>
-            <Burger
-              ingredients={this.props.ings}
-              ingArray={this.state.totalIng}
-            />
-            <BuildControls
-              ingredientAdded={this.props.onIngredientAdded}
-              ingredientMinus={this.props.onIngredientRemoved}
-              disabled={disabledInfo}
-              price={this.props.price}
-              allDisabled={didItTrue(disabledInfo)}
-              ordered={this.purchaseHandler}
-              isAuth={this.props.isAuth}
-            />
-          </React.Fragment>
-        ) : this.props.error ? (
-          <p>This is wrong</p>
-        ) : (
-          <Spinner />
-        )}
-      </React.Fragment>
-    );
+  const disabledInfo = {
+    ...props.ings,
+  };
+  for (let n in disabledInfo) {
+    disabledInfo[n] = disabledInfo[n] <= 0;
   }
-}
+
+  function didItTrue(obj) {
+    for (let n in Object.keys(obj)) {
+      if (obj[Object.keys(obj)[n]] !== true) {
+        // если добавили какой-то ингредиент кнопка покупки станет доступна
+        return false;
+      }
+    }
+    return true;
+  }
+  // let spinner = props.error ? <p>Something is wrong</p> : <Spinner />;
+
+  return (
+    <React.Fragment>
+      <Modal show={purchasing} hide={stopPurchaseHandler}>
+        {!props.ings && props.loading ? (
+          <Spinner />
+        ) : (
+          <OrderSummary
+            purchContinue={purchaseContinueHandler}
+            purchCancel={stopPurchaseHandler}
+            ingredients={props.ings}
+            price={props.price}
+          />
+        )}
+      </Modal>
+      {props.ings ? (
+        <React.Fragment>
+          <Burger ingredients={props.ings} ingArray={props.totalIng} />
+          <BuildControls
+            ingredientAdded={props.onIngredientAdded}
+            ingredientMinus={props.onIngredientRemoved}
+            disabled={disabledInfo}
+            price={props.price}
+            allDisabled={didItTrue(disabledInfo)}
+            ordered={purchaseHandler}
+            isAuth={props.isAuth}
+          />
+        </React.Fragment>
+      ) : props.error ? (
+        <p>This is wrong</p>
+      ) : (
+        <Spinner />
+      )}
+    </React.Fragment>
+  );
+};
 
 const mapStateToProps = (state) => {
   return {

@@ -5,16 +5,14 @@ import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 import { connect } from 'react-redux';
 
 const Layout = (props) => {
-  let initialState = {
-    showSideDrawer: false,
-  };
+  // let initialState = {
+  //   showSideDrawer: false,
+  // };
 
-  const [myState, setMyState] = useState(initialState);
+  const [myState, setMyState] = useState(false);
 
   let sideDrawerCLoseHandler = () => {
-    setMyState({
-      showSideDrawer: !myState.showSideDrawer,
-    });
+    setMyState(!myState);
   };
 
   return (
@@ -22,7 +20,7 @@ const Layout = (props) => {
       <Toolbar isAuth={props.isAuth} open={sideDrawerCLoseHandler} />
       <SideDrawer
         isAuth={props.isAuth}
-        open={myState.showSideDrawer}
+        open={myState}
         closed={sideDrawerCLoseHandler}
       />
       <main className={ss.content}>{props.children}</main>
